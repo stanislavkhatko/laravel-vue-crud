@@ -3,10 +3,26 @@ The system will track users' book reading progress, and will reward readers with
 
 ## Installation
 
+Clone repository and run under the folder
+
 `composer install`
 
-`npm run production`
+`npm install`
 
+Create .env file with DB configuration, then
+
+`php artisan migrate --seed` - populate db with data
+
+`npm run production` - compile assets
+
+`php artisan serve` - start a development server and visit a localhost url from the terminal
+
+
+Admin password: `123456`
+Admin username: `admin`
+
+## Missing
+Create user functionality
 
 
 

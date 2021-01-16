@@ -13,7 +13,12 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+//Route::post('/login', [\App\Http\Controllers\Api\LoginController::class, 'login']);
 
+Route::get('/users', [\App\Http\Controllers\Api\UsersController::class, 'index']);
+Route::post('/users', [\App\Http\Controllers\Api\UsersController::class, 'store']);
+Route::post('/users/{id}', [\App\Http\Controllers\Api\UsersController::class, 'update']);
+Route::delete('/users/{id}', [\App\Http\Controllers\Api\UsersController::class, 'destroy']);
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

@@ -13,5 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/admin', ['AdminController', 'index']);
-Route::get('/', [\App\Http\Controllers\FrontendController::class, 'index']);
+Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index']);
+Route::get('/admin/{any}', [\App\Http\Controllers\AdminController::class, 'index'])->where('any', '.*');;
+Route::get('/', [\App\Http\Controllers\FrontendController::class, 'index'])->name('home');
+
+Auth::routes();

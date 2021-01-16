@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique()->nullable();
             $table->string('dob')->nullable();
             $table->string('gender')->nullable();
+            $table->integer('role_id')->default(null);
             $table->rememberToken();
             $table->timestamps();
         });

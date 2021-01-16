@@ -23,8 +23,44 @@ class User extends Authenticatable
         'password',
         'username',
         'gender',
-        'dob'
+        'dob',
+        'role_id'
     ];
+
+    protected $appends = [
+        'is_admin'
+    ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function role() {
+        return $this->belongsTo(Role::class);
+    }
+
+    /**
+     * Helper method if user is Admin
+     *
+     * @return bool
+     */
+    public function isAdmin() {
+        return $this->role->role === 'admin';
+    }
+
+    public function getIsAdminAttribute() {
+        return $this->isAdmin();
+    }
+
+
+    /**
+     * Helper method to compare a role
+     *
+     * @param $role
+     * @return bool
+     */
+    public function hasRole($role) {
+        return $this->role->role === $role;
+    }
 
     /**
      * The attributes that should be hidden for arrays.
@@ -44,4 +80,5 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
 }
