@@ -18,13 +18,13 @@ class TimesAndLinesReadSeeder extends Seeder
         $users = User::all();
 
         foreach ($users as $user) {
-            \App\Models\TimesRead::factory(10)->state(function ($attributes) use ($user) {
+            \App\Models\TimesRead::factory(rand(1, 10))->state(function ($attributes) use ($user) {
                 return [
                     'user_id' => $user->id,
                 ];
             })->create();
 
-            \App\Models\LinesRead::factory(10)->state(function ($attributes) use ($user) {
+            \App\Models\LinesRead::factory(rand(1,10))->state(function ($attributes) use ($user) {
                 return [
                     'user_id' => $user->id,
                 ];

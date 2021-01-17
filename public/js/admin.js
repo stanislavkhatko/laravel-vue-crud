@@ -3817,12 +3817,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Reports",
   data: function data() {
     return {
-      users: []
+      users: [],
+      transactions: []
     };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/api/reports').then(function (response) {
+      _this.users = response.data.users;
+      _this.transactions = response.data.transactions;
+    });
+  },
+  methods: {
+    getTotalTimesRead: function getTotalTimesRead(user) {
+      return this.transactions.reduce(function (total, transaction) {
+        return transaction.user_id === user.id && transaction.type === 'time' ? total + transaction.amount : total;
+      }, 0);
+    },
+    getTotalLinesRead: function getTotalLinesRead(user) {
+      return this.transactions.reduce(function (total, transaction) {
+        return transaction.user_id === user.id && transaction.type === 'line' ? total + transaction.amount : total;
+      }, 0);
+    },
+    getTotalTransactionoReward: function getTotalTransactionoReward(user) {
+      return this.transactions.reduce(function (total, transaction) {
+        return transaction.user_id === user.id ? total + transaction.amount : total;
+      }, 0);
+    }
   }
 });
 
@@ -66638,7 +66669,24 @@ var render = function() {
   return _c(
     "el-main",
     [
-      _c("el-header", [_c("el-input")], 1),
+      _c(
+        "el-header",
+        [
+          _c(
+            "el-row",
+            { attrs: { gutter: 10 } },
+            [
+              _c("el-col", { attrs: { span: 3 } }, [_c("el-input")], 1),
+              _vm._v(" "),
+              _c("el-col", { attrs: { span: 3 } }),
+              _vm._v(" "),
+              _c("el-col", { attrs: { span: 3 } })
+            ],
+            1
+          )
+        ],
+        1
+      ),
       _vm._v(" "),
       _vm.users.length
         ? _c(
@@ -66721,11 +66769,7 @@ var render = function() {
                         return [
                           _vm._v(
                             "\n                " +
-                              _vm._s(
-                                _vm.roles.find(function(role) {
-                                  return role.id === scope.row.role_id
-                                }).name
-                              ) +
+                              _vm._s(scope.row.role.name) +
                               "\n            "
                           )
                         ]
@@ -66734,7 +66778,7 @@ var render = function() {
                   ],
                   null,
                   false,
-                  334279778
+                  519012960
                 )
               }),
               _vm._v(" "),
@@ -66745,13 +66789,19 @@ var render = function() {
                     {
                       key: "default",
                       fn: function(scope) {
-                        return [_vm._v("\n                TODO\n            ")]
+                        return [
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(_vm.getTotalTimesRead(scope.row)) +
+                              "\n            "
+                          )
+                        ]
                       }
                     }
                   ],
                   null,
                   false,
-                  3321149088
+                  2173215250
                 )
               }),
               _vm._v(" "),
@@ -66762,13 +66812,19 @@ var render = function() {
                     {
                       key: "default",
                       fn: function(scope) {
-                        return [_vm._v("\n                TODO\n            ")]
+                        return [
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(_vm.getTotalLinesRead(scope.row)) +
+                              "\n            "
+                          )
+                        ]
                       }
                     }
                   ],
                   null,
                   false,
-                  3321149088
+                  2734261801
                 )
               }),
               _vm._v(" "),
@@ -66779,13 +66835,21 @@ var render = function() {
                     {
                       key: "default",
                       fn: function(scope) {
-                        return [_vm._v("\n                TODO\n            ")]
+                        return [
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(
+                                _vm.getTotalTransactionoReward(scope.row)
+                              ) +
+                              "\n            "
+                          )
+                        ]
                       }
                     }
                   ],
                   null,
                   false,
-                  3321149088
+                  1462736122
                 )
               })
             ],
