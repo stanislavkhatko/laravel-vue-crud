@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 // Middleware
 import admin from './middlewares/admin';
-import guest from './middlewares/guest';
+import authenticated from './middlewares/authenticated';
 
 import Dashboard from "./dashboard/Dashboard";
 import Login from "./dashboard/Login";
@@ -36,7 +36,7 @@ const router = new Router({
             //     },
             ]
         },
-        {path: '/login', component: Login, meta: {middleware: [guest]}},
+        {path: '/login', component: Login, meta: {middleware: [authenticated]}},
 
         // {path: "*", component: Login}
     ]
