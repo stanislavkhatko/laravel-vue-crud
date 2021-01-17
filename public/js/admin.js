@@ -3772,8 +3772,58 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "Reports"
+  name: "Reports",
+  data: function data() {
+    return {
+      users: []
+    };
+  }
 });
 
 /***/ }),
@@ -66585,7 +66635,166 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("el-main", [_vm._v("\n\n    reports\n")])
+  return _c(
+    "el-main",
+    [
+      _c("el-header", [_c("el-input")], 1),
+      _vm._v(" "),
+      _vm.users.length
+        ? _c(
+            "el-table",
+            { staticStyle: { width: "100%" }, attrs: { data: _vm.users } },
+            [
+              _c("el-table-column", {
+                attrs: { label: "ID", width: "60" },
+                scopedSlots: _vm._u(
+                  [
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [
+                          _vm._v("\n                #"),
+                          _c("span", [_vm._v(_vm._s(scope.row.id))])
+                        ]
+                      }
+                    }
+                  ],
+                  null,
+                  false,
+                  3727598878
+                )
+              }),
+              _vm._v(" "),
+              _c("el-table-column", {
+                attrs: { label: "Gender", width: "100" },
+                scopedSlots: _vm._u(
+                  [
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(scope.row.gender) +
+                              "\n            "
+                          )
+                        ]
+                      }
+                    }
+                  ],
+                  null,
+                  false,
+                  302003490
+                )
+              }),
+              _vm._v(" "),
+              _c("el-table-column", {
+                attrs: { label: "Birthday", width: "100" },
+                scopedSlots: _vm._u(
+                  [
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(scope.row.dob) +
+                              "\n            "
+                          )
+                        ]
+                      }
+                    }
+                  ],
+                  null,
+                  false,
+                  639278644
+                )
+              }),
+              _vm._v(" "),
+              _c("el-table-column", {
+                attrs: { label: "Role", width: "100" },
+                scopedSlots: _vm._u(
+                  [
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(
+                                _vm.roles.find(function(role) {
+                                  return role.id === scope.row.role_id
+                                }).name
+                              ) +
+                              "\n            "
+                          )
+                        ]
+                      }
+                    }
+                  ],
+                  null,
+                  false,
+                  334279778
+                )
+              }),
+              _vm._v(" "),
+              _c("el-table-column", {
+                attrs: { label: "TimesRead", width: "100" },
+                scopedSlots: _vm._u(
+                  [
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [_vm._v("\n                TODO\n            ")]
+                      }
+                    }
+                  ],
+                  null,
+                  false,
+                  3321149088
+                )
+              }),
+              _vm._v(" "),
+              _c("el-table-column", {
+                attrs: { label: "LinesRead", width: "100" },
+                scopedSlots: _vm._u(
+                  [
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [_vm._v("\n                TODO\n            ")]
+                      }
+                    }
+                  ],
+                  null,
+                  false,
+                  3321149088
+                )
+              }),
+              _vm._v(" "),
+              _c("el-table-column", {
+                attrs: { label: "Transaction reward", width: "100" },
+                scopedSlots: _vm._u(
+                  [
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [_vm._v("\n                TODO\n            ")]
+                      }
+                    }
+                  ],
+                  null,
+                  false,
+                  3321149088
+                )
+              })
+            ],
+            1
+          )
+        : _vm._e()
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
