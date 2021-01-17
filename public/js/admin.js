@@ -3822,37 +3822,99 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Reports",
   data: function data() {
     return {
       users: [],
-      transactions: []
+      transactions: [],
+      filtersVisible: false,
+      filters: {}
     };
   },
+  computed: {
+    filteredUsers: function filteredUsers() {
+      var _this = this;
+
+      return this.users.filter(function (user) {
+        if (_this.filters.gender) {
+          return user.gender === _this.filters.gender;
+        } else if (_this.filters.lines_read) {
+          return user.lines_read > _this.filters.lines_read;
+        } else {
+          return user;
+        }
+      });
+    }
+  },
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
     axios.get('/api/reports').then(function (response) {
-      _this.users = response.data.users;
-      _this.transactions = response.data.transactions;
+      _this2.users = response.data.users;
+      _this2.transactions = response.data.transactions;
     });
   },
   methods: {
-    getTotalTimesRead: function getTotalTimesRead(user) {
-      return this.transactions.reduce(function (total, transaction) {
-        return transaction.user_id === user.id && transaction.type === 'time' ? total + transaction.amount : total;
-      }, 0);
+    compareDate: function compareDate(dateA, dateB) {
+      return dateA > dateB;
     },
-    getTotalLinesRead: function getTotalLinesRead(user) {
-      return this.transactions.reduce(function (total, transaction) {
-        return transaction.user_id === user.id && transaction.type === 'line' ? total + transaction.amount : total;
-      }, 0);
+    closeFilter: function closeFilter(filter) {
+      this.$delete(this.filters, filter);
     },
-    getTotalTransactionoReward: function getTotalTransactionoReward(user) {
-      return this.transactions.reduce(function (total, transaction) {
-        return transaction.user_id === user.id ? total + transaction.amount : total;
-      }, 0);
+    formatDate: function formatDate(date) {
+      var dateObject = new Date(date);
+      return dateObject.getDate() + "-" + (dateObject.getMonth() + 1) + "-" + dateObject.getFullYear();
     }
   }
 });
@@ -66674,13 +66736,180 @@ var render = function() {
         [
           _c(
             "el-row",
-            { attrs: { gutter: 10 } },
+            { attrs: { gutter: 20 } },
             [
-              _c("el-col", { attrs: { span: 3 } }, [_c("el-input")], 1),
+              _c(
+                "el-button",
+                {
+                  staticStyle: { "margin-right": "20px" },
+                  attrs: { type: "primary" },
+                  on: {
+                    click: function($event) {
+                      _vm.filtersVisible = true
+                    }
+                  }
+                },
+                [_vm._v("Filter")]
+              ),
               _vm._v(" "),
-              _c("el-col", { attrs: { span: 3 } }),
+              _vm._l(_vm.filters, function(value, index) {
+                return _c(
+                  "el-tag",
+                  {
+                    key: index,
+                    staticStyle: { "margin-right": "10px" },
+                    attrs: { closable: "" },
+                    on: {
+                      close: function($event) {
+                        return _vm.closeFilter(index)
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(index) +
+                        ": " +
+                        _vm._s(value) +
+                        "\n            "
+                    )
+                  ]
+                )
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "el-dialog",
+            {
+              attrs: { visible: _vm.filtersVisible, title: "Tips" },
+              on: {
+                "update:visible": function($event) {
+                  _vm.filtersVisible = $event
+                }
+              }
+            },
+            [
+              _c(
+                "el-form",
+                {
+                  ref: "form",
+                  attrs: { model: _vm.filters, "label-width": "120px" }
+                },
+                [
+                  _c(
+                    "el-form-item",
+                    { attrs: { label: "Filters by gender" } },
+                    [
+                      _c(
+                        "el-select",
+                        {
+                          attrs: {
+                            clearable: "",
+                            placeholder: "Filter by gender"
+                          },
+                          on: {
+                            clear: function($event) {
+                              return _vm.closeFilter("gender")
+                            }
+                          },
+                          model: {
+                            value: _vm.filters.gender,
+                            callback: function($$v) {
+                              _vm.$set(_vm.filters, "gender", $$v)
+                            },
+                            expression: "filters.gender"
+                          }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "el-input__icon el-icon-calendar",
+                            attrs: { slot: "prefix" },
+                            slot: "prefix"
+                          }),
+                          _vm._v(" "),
+                          _c("el-option", {
+                            attrs: { label: "Male", value: "male" }
+                          }),
+                          _vm._v(" "),
+                          _c("el-option", {
+                            attrs: { label: "Female", value: "female" }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-form-item",
+                    {
+                      attrs: {
+                        label: "Display users that read more lines than"
+                      }
+                    },
+                    [
+                      _c(
+                        "el-input",
+                        {
+                          attrs: {
+                            clearable: "",
+                            placeholder: "Number",
+                            type: "number"
+                          },
+                          on: {
+                            clear: function($event) {
+                              return _vm.closeFilter("lines_read")
+                            }
+                          },
+                          model: {
+                            value: _vm.filters.lines_read,
+                            callback: function($$v) {
+                              _vm.$set(_vm.filters, "lines_read", $$v)
+                            },
+                            expression: "filters.lines_read"
+                          }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "el-input__icon el-icon-calendar",
+                            attrs: { slot: "prefix" },
+                            slot: "prefix"
+                          })
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
-              _c("el-col", { attrs: { span: 3 } })
+              _c(
+                "div",
+                {
+                  staticClass: "dialog-footer",
+                  attrs: { slot: "footer" },
+                  slot: "footer"
+                },
+                [
+                  _c(
+                    "el-button",
+                    {
+                      attrs: { type: "primary" },
+                      on: {
+                        click: function($event) {
+                          _vm.filtersVisible = false
+                        }
+                      }
+                    },
+                    [_vm._v("Close")]
+                  )
+                ],
+                1
+              )
             ],
             1
           )
@@ -66688,13 +66917,16 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _vm.users.length
+      _vm.filteredUsers.length
         ? _c(
             "el-table",
-            { staticStyle: { width: "100%" }, attrs: { data: _vm.users } },
+            {
+              staticStyle: { width: "100%" },
+              attrs: { data: _vm.filteredUsers, "default-sort": { prop: "id" } }
+            },
             [
               _c("el-table-column", {
-                attrs: { label: "ID", width: "60" },
+                attrs: { label: "ID", prop: "id", sortable: "", width: "60" },
                 scopedSlots: _vm._u(
                   [
                     {
@@ -66714,7 +66946,12 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("el-table-column", {
-                attrs: { label: "Gender", width: "100" },
+                attrs: {
+                  label: "Username",
+                  prop: "username",
+                  sortable: "",
+                  width: "120"
+                },
                 scopedSlots: _vm._u(
                   [
                     {
@@ -66723,7 +66960,7 @@ var render = function() {
                         return [
                           _vm._v(
                             "\n                " +
-                              _vm._s(scope.row.gender) +
+                              _vm._s(scope.row.username) +
                               "\n            "
                           )
                         ]
@@ -66732,12 +66969,17 @@ var render = function() {
                   ],
                   null,
                   false,
-                  302003490
+                  2521094155
                 )
               }),
               _vm._v(" "),
               _c("el-table-column", {
-                attrs: { label: "Birthday", width: "100" },
+                attrs: {
+                  label: "Name",
+                  prop: "name",
+                  sortable: "",
+                  width: "100"
+                },
                 scopedSlots: _vm._u(
                   [
                     {
@@ -66746,7 +66988,7 @@ var render = function() {
                         return [
                           _vm._v(
                             "\n                " +
-                              _vm._s(scope.row.dob) +
+                              _vm._s(scope.row.first_name) +
                               "\n            "
                           )
                         ]
@@ -66755,12 +66997,17 @@ var render = function() {
                   ],
                   null,
                   false,
-                  639278644
+                  656940799
                 )
               }),
               _vm._v(" "),
               _c("el-table-column", {
-                attrs: { label: "Role", width: "100" },
+                attrs: {
+                  label: "Last name",
+                  prop: "last_name",
+                  sortable: "",
+                  width: "120"
+                },
                 scopedSlots: _vm._u(
                   [
                     {
@@ -66769,7 +67016,7 @@ var render = function() {
                         return [
                           _vm._v(
                             "\n                " +
-                              _vm._s(scope.row.role.name) +
+                              _vm._s(scope.row.last_name) +
                               "\n            "
                           )
                         ]
@@ -66778,12 +67025,17 @@ var render = function() {
                   ],
                   null,
                   false,
-                  519012960
+                  537666639
                 )
               }),
               _vm._v(" "),
               _c("el-table-column", {
-                attrs: { label: "TimesRead", width: "100" },
+                attrs: {
+                  label: "TimeRead",
+                  prop: "times_read",
+                  sortable: "",
+                  width: "120"
+                },
                 scopedSlots: _vm._u(
                   [
                     {
@@ -66792,7 +67044,7 @@ var render = function() {
                         return [
                           _vm._v(
                             "\n                " +
-                              _vm._s(_vm.getTotalTimesRead(scope.row)) +
+                              _vm._s(scope.row.times_read) +
                               "\n            "
                           )
                         ]
@@ -66801,12 +67053,17 @@ var render = function() {
                   ],
                   null,
                   false,
-                  2173215250
+                  1220015478
                 )
               }),
               _vm._v(" "),
               _c("el-table-column", {
-                attrs: { label: "LinesRead", width: "100" },
+                attrs: {
+                  label: "LinesRead",
+                  prop: "lines_read",
+                  sortable: "",
+                  width: "120"
+                },
                 scopedSlots: _vm._u(
                   [
                     {
@@ -66815,7 +67072,7 @@ var render = function() {
                         return [
                           _vm._v(
                             "\n                " +
-                              _vm._s(_vm.getTotalLinesRead(scope.row)) +
+                              _vm._s(scope.row.lines_read) +
                               "\n            "
                           )
                         ]
@@ -66824,12 +67081,17 @@ var render = function() {
                   ],
                   null,
                   false,
-                  2734261801
+                  4009382797
                 )
               }),
               _vm._v(" "),
               _c("el-table-column", {
-                attrs: { label: "Transaction reward", width: "100" },
+                attrs: {
+                  label: "Membership rewards",
+                  prop: "reward",
+                  sortable: "",
+                  width: "180"
+                },
                 scopedSlots: _vm._u(
                   [
                     {
@@ -66838,9 +67100,7 @@ var render = function() {
                         return [
                           _vm._v(
                             "\n                " +
-                              _vm._s(
-                                _vm.getTotalTransactionoReward(scope.row)
-                              ) +
+                              _vm._s(scope.row.reward) +
                               "\n            "
                           )
                         ]
@@ -66849,7 +67109,35 @@ var render = function() {
                   ],
                   null,
                   false,
-                  1462736122
+                  3548712330
+                )
+              }),
+              _vm._v(" "),
+              _c("el-table-column", {
+                attrs: {
+                  label: "Created at",
+                  prop: "date",
+                  sortable: "",
+                  width: "120"
+                },
+                scopedSlots: _vm._u(
+                  [
+                    {
+                      key: "default",
+                      fn: function(scope) {
+                        return [
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(_vm.formatDate(scope.row.created_at)) +
+                              "\n            "
+                          )
+                        ]
+                      }
+                    }
+                  ],
+                  null,
+                  false,
+                  3633561377
                 )
               })
             ],

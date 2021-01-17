@@ -27,6 +27,9 @@ class User extends Authenticatable
         'role_id'
     ];
 
+    /**
+     * @var array[]
+     */
     protected $appends = [
         'is_admin'
     ];
@@ -47,9 +50,34 @@ class User extends Authenticatable
         return $this->role->role === 'admin';
     }
 
+    /**
+     * @return bool
+     */
     public function getIsAdminAttribute() {
         return $this->isAdmin();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getTimesReadAttribute() {
+        return Transaction::all()->where('user_id', $this->id)->where('type', 'time')->sum('amount');
+    }
+
+    /**
+     * @return int
+     */
+    public function getLinesReadAttribute() {
+        return Transaction::all()->where('user_id', $this->id)->where('type', 'line')->count();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRewardAttribute() {
+        return Transaction::all()->where('user_id', $this->id)->sum('amount');
+    }
+
 
 
     /**
@@ -79,6 +107,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+//        'created_at' => 'datetime:d-m-Y',
     ];
 
 }

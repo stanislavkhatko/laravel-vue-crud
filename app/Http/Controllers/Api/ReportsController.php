@@ -11,7 +11,7 @@ class ReportsController extends Controller
 {
     public function index() {
         return [
-            'users' => User::all(),
+            'users' => User::all()->append(['lines_read', 'times_read', 'reward']),
             'transactions' => Transaction::all()
         ];
     }
