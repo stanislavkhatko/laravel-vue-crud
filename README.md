@@ -24,7 +24,7 @@ Admin username: `admin`
 ## Missing
 Create user functionality
 
-Implemented several filters for reports table, but other required filters need time.
+Implement url access to filtered data in reports table
 
 
 
